@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Q - Project - Rive Icon Test</title>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/@rive-app/canvas@2.24.0"></script>
+
+    <style>
+      :root{
+        --size: 140px;   /* розмір канвасу */
+        --gap: 16px;     /* відступи між іконками */
+        --cols: 6;       /* максимум колонок у рядку */
+      }
+
+      @font-face {
+        font-family: 'Otoiwogrotesk';
+        src: url('fonts/otoiwogrotesknormal-regular_w.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;   /* центрує контейнер по горизонталі */
+        align-items: center;       /* центрує по вертикалі, якщо є вільний простір */
+        min-height: 100vh;         /* щоб вертикальне центрування працювало */
+        background: #050505;          /* або будь-який інший колір фону */
+        font-family: 'Otoiwogrotesk', sans-serif;
+      }
+
+      #icons{
+        display: grid;
+        grid-template-columns: repeat(var(--cols), var(--size)); /* рівно 6 колонок */
+        grid-auto-rows: var(--size);
+        gap: var(--gap);
+        justify-content: center;   /* починаємо зліва */
+        align-content: center;
+        /* необов’язково, але зручно обмежити ширину контейнера під 6 колонок */
+        max-width: calc(var(--cols) * var(--size) + (var(--cols) - 1) * var(--gap));
+      }
+
+      #icons canvas{
+        width: var(--size);
+        height: var(--size);
+        display: block; /* щоб не було inline-відступів */
+        background-color: #4B4B52;
+        border-radius: 0px
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <div style="text-align: center">
+      <h1 style="color: #fff;">Qommett Icon Pack</h1>
+      <br></br>
+      <div id="icons" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px"></div>
+      <br></br>
+      <p style="color: #4B4B52;">reload page (CTRL+R) to show appearance animation</p>  
+      
+      <script>
+        const ARTBOARD = 'Icon';
+        const STATE_MACHINE = 'State Machine 1';
+        const CANVAS_PREFIX = 'c';
+
+        // масив інстансів Rive
+        const r = [];
+
+        async function boot() {
+          const res  = await fetch('Icons/icon_list.json');
+          const data = await res.json();
+          const files = Array.isArray(data) ? data : (data.icons || []);
+
+          const wrap = document.getElementById('icons');
+          if (!files.length) {
+            wrap.textContent = 'Немає .riv у Icons/';
+            return;
+          }
+
+          files.forEach((file, i) => {
+            // створюємо canvas з id c1, c2, c3...
+            const id = `${CANVAS_PREFIX}${i + 1}`;
+            const canvas = document.createElement('canvas');
+            canvas.id = id;
+            canvas.width = 140;   // підстав свій розмір
+            canvas.height = 140;  // підстав свій розмір
+            wrap.appendChild(canvas);
+
+            // створюємо Rive інстанс і кладемо в масив
+            const instance = new rive.Rive({
+              src: `Icons/${file}`,   // беремо ім’я з JSON
+              canvas,
+              autoplay: true,
+              artboard: ARTBOARD,
+              stateMachines: STATE_MACHINE,
+              onLoad: () => instance.resizeDrawingSurfaceToCanvas()
+            });
+
+            r.push(instance);
+          });
+        }
+
+        boot().catch(err => {
+          console.error(err);
+          document.getElementById('icons').textContent = 'Помилка завантаження іконок.';
+        });
+      </script>      
+             
+
+    </div>
+  </body>
+
+</html>
