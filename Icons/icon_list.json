@@ -1,0 +1,11 @@
+{
+  "icons": [
+    "cart_icon.riv",
+    "chart_icon.riv",
+    "custom_loyalty_icon.riv",
+    "headless_ecom_icon.riv",
+    "kiosk_icon.riv",
+    "pos_icon.riv",
+    "search_icon.riv"
+  ]
+}
