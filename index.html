@@ -177,46 +177,44 @@
              
 
     </div>
+    
     <div class="service-list">
-      <div id="service-card" class="service-card">
+
+      <div id="service-card-2" class="service-card">
         <div class="card-media">
-          <canvas id="service_card_image"></canvas>
+          <canvas id="service_card_2_image"></canvas>
         </div>
         <div class="card-content">
           <div class="card-header">
-            <canvas id="service_card_icon" class="card-icon"></canvas>
-            <h3>Розробка Headless e-Commerce</h3>
+            <canvas id="service_card_2_icon" class="card-icon"></canvas>
+            <h3>Розумний пошук</h3>
           </div>
-          <p>E-commerce платформа з аналітикою та повною цифровою екосистемою для зростання вашого ритейл-бізнесу.</p>
+          <p>Розумний пошук із персоналізацією та рекомендаціями, що підвищуює релевантність, конверсію та середній чек.</p>
         </div>
-      </div>
 
-      <script>
-        const card = document.getElementById("service-card");
-        let imgHover, iconHover;
+        <script>
+        const card2 = document.getElementById("service-card-2");
+        let imgHover2, iconHover2;
 
-        const img = new rive.Rive({
-          src: "Images/headless_ecom_img.riv",
-          canvas: document.getElementById("service_card_image"),
+        const img2 = new rive.Rive({
+          src: "Images/gag_img.riv",
+          canvas: document.getElementById("service_card_2_image"),
           autoplay: true,
           stateMachines: "State Machine 1",
           onLoad: () => {
-            img.resizeDrawingSurfaceToCanvas();
-            imgHover = img.stateMachineInputs("State Machine 1")
-                          .find(i => i.name === "Hover");
-            console.log('[IMG] Hover input:', imgHover);
+            img2.resizeDrawingSurfaceToCanvas();
+            imgHover2 = img2.stateMachineInputs("State Machine 1").find(i => i.name === "Hover");
           }
-          
         });
 
-        const icon = new rive.Rive({
-          src: "Icons/headless_ecom_icon.riv",
-          canvas: document.getElementById("service_card_icon"),
+        const icon2 = new rive.Rive({
+          src: "Icons/search_icon.riv",
+          canvas: document.getElementById("service_card_2_icon"),
           autoplay: true,
           stateMachines: "State Machine 1",
           onLoad: () => {
-            icon.resizeDrawingSurfaceToCanvas();
-            iconHover = icon.stateMachineInputs("State Machine 1").find(i => i.name === "Hover");
+            icon2.resizeDrawingSurfaceToCanvas();
+            iconHover2 = icon2.stateMachineInputs("State Machine 1").find(i => i.name === "Hover");
           }    
         });
 
@@ -229,16 +227,19 @@
         }
         
         function setHover(v) {
-          setInput(imgHover, v);
-          setInput(iconHover, v);
+          setInput(imgHover2, v);
+          setInput(iconHover2, v);
         }
 
         // hover саме на контенті картки
-        card.addEventListener('mouseenter', () => setHover(true));
-        card.addEventListener('mouseleave', () => setHover(false));
+        card2.addEventListener('mouseenter', () => setHover(true));
+        card2.addEventListener('mouseleave', () => setHover(false));
 
       </script>
+      </div>
+      
     </div>
   </body>
 
 </html>
+
